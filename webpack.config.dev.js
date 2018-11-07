@@ -2,7 +2,11 @@ var webpack = require('webpack');
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
-
+//---ant
+const path = require('path');
+const fs  = require('fs');
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './client/ant-theme-vars.less'), 'utf8'));
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
 
@@ -27,7 +31,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.less'],
     modules: [
       'client',
       'node_modules',
@@ -37,7 +41,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.s?css$/,
+        test:  /\.s?css$/,
         exclude: /node_modules/,
         use: [
           {
@@ -67,17 +71,46 @@ module.exports = {
             },
           },
         ],
-      },
-      {
+        },
+       /*    {
         test: /\.css$/,
         include: /node_modules/,
         use: ['style-loader', 'css-loader'],
+        },*/
+       {
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
+        exclude: [/node_modules/, /.+\.config.js/],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                  ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "true" }], // `style: true` for less
+              ],
+            },
+
+          },
+        ],
       },
       {
-        test: /\.jsx*$/,
-        exclude: [/node_modules/, /.+\.config.js/],
-        use: 'babel-loader',
-      },
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: themeVariables,
+              javascriptEnabled: true
+
+            },
+          },
+        ],
+        },
       {
         test: /\.(jpe?g|gif|png|svg)$/i,
         use: [

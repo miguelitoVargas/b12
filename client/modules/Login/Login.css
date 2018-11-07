@@ -1,0 +1,31 @@
+/* Login styles */
+/*@import '../../../node_modules/antd/dist/antd.less';*/
+.ant-checkbox-input {
+}
+.loginContainer {
+  max-width: 100%;
+}
+.loginformHeading {
+
+  color: 'yellow';
+}
+.loginForm {
+  max-width: 300px;
+/*  color: green !important;*/
+}
+
+.loginFormBody > input {
+
+}
+
+.loginFormForgot {
+  float: right;
+}
+
+.loginFormButton {
+  width: 100%;
+}
+
+.initValues {
+}
+

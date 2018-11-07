@@ -9,9 +9,11 @@ import IntlWrapper from './modules/Intl/IntlWrapper';
 
 // Import Routes
 import routes from './routes';
-
 // Base stylesheet
 require('./main.css');
+
+//--- antd stylecheet
+import '../node_modules/antd/dist/antd.less';
 
 export default function App(props) {
   return (
