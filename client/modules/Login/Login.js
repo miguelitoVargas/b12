@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 //--- form imports
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 // Import Style
-import styles, {initValues, loginForm, loginFormHeading,
+import styles, {initValues, loginForm, loginformHeading,
   loginFormButton, loginFormForgot, loginFormBody, loginContainer} from './Login.css';
   //--- actions
 import {saveUserLoginInfo} from './LoginActions';
@@ -16,31 +16,17 @@ const FormItem = Form.Item;
 class Login extends Component {
 
   constructor(props) {
-
     super(props);
     this.state = {userIsLogged: false};
   }
-
-  componentDidMount() {
-    console.log('didmount', this.state, this.props);
-    //    this.props.uuid ? console.log('o canary', this.state, this.props) : console.log('o perique', this.state,this.props);
-  }
-  componentWillUpdate() {
-
-    //    console.log('willupdate', this.state, this.props);
-
-    //this.props.uuid ? console.log('o elephant', this.state, this.props) : console.log('o mousey', this.state,this.props);
-  }
+  //-------- life cycle
   componentDidUpdate() {
-
-
     const {uuid, isUserLogged} = this.props.userLoginInfo;
     if(isUserLogged) {
       const usrAddrs = `/${uuid}`;
       ///      console.log('USR_ADDRS', usrAddrs);
       this.props.router.push(`${usrAddrs}`);
     }
-
   }
 
   handleSubmit = (e) => {
@@ -55,13 +41,11 @@ class Login extends Component {
   }
 
   render() {
-
     const { getFieldDecorator } = this.props.form;
-
     return (
       <div className={loginContainer}>
         <div className={loginForm}>
-          <h3 className={loginFormHeading}> SIGN IN TO YOUR ACCOUNT </h3>
+          <h3 className={loginformHeading}> SIGN IN TO YOUR ACCOUNT </h3>
           <Form onSubmit={this.handleSubmit} className={loginFormBody}>
             <FormItem>
               {getFieldDecorator('email', {
@@ -88,7 +72,7 @@ class Login extends Component {
               <Checkbox className={initValues}>Remember me</Checkbox>
               )}
               <a className={loginFormForgot} href="">Forgot password</a>
-              <Button type="primary" htmlType="submit" className={loginFormButton}>
+              <Button type="default" htmlType="submit" className={loginFormButton}>
                 Log in
               </Button>
               Or <a href="">register now!</a>
@@ -99,16 +83,10 @@ class Login extends Component {
       );
   }
 }
-
+//------enhancers helpers
 const mapStateToProps = (state, ownProps) => {
-  // console.log('state2props', state, ownProps);
-  //  const {uuid} = state.login;
-  console.log('UUID', state);
   return {
-
     userLoginInfo: state.userLoginInfo,
-
-
   };
 };
 

@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import {Layout, Menu, Button} from 'antd';
+
+const {Header} = Layout;
 
 // Import Style
 import styles from './Header.css';
 
-class Header extends Component {
+class HeaderContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -18,38 +21,51 @@ class Header extends Component {
   componentDidMount() {
     console.log('moounted', styles.header);
   }
-  headerContent() {
+  renderClientsMenu() {
 
     return (
-            this.props.userLoginInfo.isUserLogged ? <div>HEADERCONTENT</div> : null
-           )
-  }
+        <Menu
+          className={styles.appMenu}
+          type="primary"
+          defaultSelectedKeys={['yesterday']}
+          mode="horizontal"
+        >
+          <Menu.Item className={styles.appMenuIndent} key="menu-btn-toggle">
+            <Button type="primary" className={styles.menuBtn}></Button>
+          </Menu.Item>
+          <Menu.Item key="today"> today</Menu.Item>
+          <Menu.Item key="yesterday">yesterday</Menu.Item>
+          <Menu.Item key="this_week">this week</Menu.Item>
+          <Menu.Item key="all"> all</Menu.Item>
 
-  /*{
-          this.props.userLoginInfo.isUserLogged ? <div>OXIMORON</div> : null
-          }*/
-  render() {
-    const finalClass = this.props.userLoginInfo.isUserLogged ? `${styles.headerLogged}`:`${styles.headerNotLogged}`;
-    return (
-      <div className={finalClass}>
-        <div className={styles.content}>
-          {this.headerContent()}
-        </div>
-      </div>
+        </Menu>
       );
+}
+
+headerContent() {
+  return (
+    this.props.userLoginInfo.isUserLogged ? this.renderClientsMenu() : null
+  )
+}
+
+render() {
+  const finalClass = this.props.userLoginInfo.isUserLogged ? `${styles.headerLogged}`:`${styles.headerNotLogged}`;
+  return (
+    <Header className={styles.content}>
+      {this.headerContent()}
+    </Header>
+    );
   }
 
 }
 
 const mapStateToProps = (state, ownProps) => {
   console.log('Header_state2props', state, ownProps);
-  //  const {uuid} = state.login;
-  //console.log('header', state);
   return state;
 };
 
 Header.propTypes = {
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(HeaderContainer);
 

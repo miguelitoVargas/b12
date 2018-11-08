@@ -1,21 +1,39 @@
 .headerNotLogged {
-  background-color: #fcfcfc;
+  background-color: #fcfcfc !important;
 }
 .headerLogged {
-  background: #eee url('../../header-bk.png') center;
-  background-size: cover;
   border-bottom: 1px solid #ccc;
 }
 
 .content {
   width: 100%;
-  max-width: 980px;
   margin: auto;
-  padding: 64px 16px;
   overflow: auto;
-  background-color: #fcfcfc;
+  background-color: #fcfcfc !important;
+  padding: 0px !important;
 }
+/*---------------------*/
+.appMenu {
+  background: #fcfcfc !important;
 
+}
+.appMenu > li {
+  margin-left: 33.3px;
+  font-size: 18px;
+  text-align: center;
+  height: 60px !important;
+}
+.appMenuIndent {
+
+  margin-left: -20px !important;
+}
+.menuBtn {
+  width: 60px;
+  height: 60px !important;
+  border: 1px solid transparent;
+  border-radius: 0px !important;
+}
+/*-----------------*/
 .site-title {
   font-weight: 300;
   font-size: 42px;

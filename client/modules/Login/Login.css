@@ -3,15 +3,19 @@
 .ant-checkbox-input {
 }
 .loginContainer {
-  max-width: 100%;
+  position: absolute;
+  top: 20%;
+  left: 36%;
+  max-width: 33.3%;
+  background-color: white;
+  padding: 15px 20px;
 }
 .loginformHeading {
+  text-align: center;
 
-  color: 'yellow';
 }
 .loginForm {
-  max-width: 300px;
-/*  color: green !important;*/
+  max-width: 100%;
 }
 
 .loginFormBody > input {
