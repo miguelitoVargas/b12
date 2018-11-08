@@ -14,25 +14,25 @@ class Header extends Component {
     console.log('constructor', this.props);
     this.headerContent = this.headerContent.bind(this);
   }
-
+  //---------life cycle
   componentDidMount() {
-        console.log('moounted', this.props);
+    console.log('moounted', styles.header);
+  }
+  headerContent() {
+
+    return (
+            this.props.userLoginInfo.isUserLogged ? <div>HEADERCONTENT</div> : null
+           )
   }
 
   /*{
-    context.router.isActive('/:uuid', true)
-      ? <a className={styles['add-post-button']} href="#" onClick={props.toggleAddPost}><FormattedMessage id="addPost" /></a>
-      : null
-      }*/
-  headerContent = () => {
-    return <div>HEADERCONTENT</div>
-  }
+          this.props.userLoginInfo.isUserLogged ? <div>OXIMORON</div> : null
+          }*/
   render() {
-
+    const finalClass = this.props.userLoginInfo.isUserLogged ? `${styles.headerLogged}`:`${styles.headerNotLogged}`;
     return (
-      <div className={styles.header}>
+      <div className={finalClass}>
         <div className={styles.content}>
-
           {this.headerContent()}
         </div>
       </div>
@@ -42,18 +42,14 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-   console.log('Header_state2props', state, ownProps);
+  console.log('Header_state2props', state, ownProps);
   //  const {uuid} = state.login;
-   //console.log('header', state);
+  //console.log('header', state);
   return state;
-
-
-
-
 };
 
-  Header.propTypes = {
-  };
+Header.propTypes = {
+};
 
-  export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(Header);
 

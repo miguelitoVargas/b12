@@ -3,7 +3,7 @@
 import { SAVE_USER_LOGIN_INFO } from './LoginActions';
 
 // Initial State
-const initialState = {userLoginInfo: {uuid: '', userIsLogged: false}};
+const initialState = {uuid: '', userIsLogged: false};
 
 const LoginReducer = (state = initialState, action) => {
   switch (action.type) {

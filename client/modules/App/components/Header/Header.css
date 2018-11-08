@@ -1,4 +1,7 @@
-.header {
+.headerNotLogged {
+  background-color: #fcfcfc;
+}
+.headerLogged {
   background: #eee url('../../header-bk.png') center;
   background-size: cover;
   border-bottom: 1px solid #ccc;
@@ -10,6 +13,7 @@
   margin: auto;
   padding: 64px 16px;
   overflow: auto;
+  background-color: #fcfcfc;
 }
 
 .site-title {
