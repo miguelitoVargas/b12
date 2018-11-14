@@ -7,18 +7,18 @@ import styles from './App.css';
 import Helmet from 'react-helmet';
 import HeaderContainer from './components/Header/Header';
 import FooterContent from './components/Footer/Footer';
-import {Layout} from 'antd';
-// Import Actions
+import { Layout } from 'antd';
+//  Import Actions
 import { toggleAddPost } from './AppActions';
 import { switchLanguage } from '../../modules/Intl/IntlActions';
 
 let DevTools;
 if (process.env.NODE_ENV === 'development') {
-  // eslint-disable-next-line global-require
+  //  eslint-disable-next-line global-require
   DevTools = require('./components/DevTools').default;
 }
 //------------------
-const {Content} = Layout;
+const { Content } = Layout;
 
 export class App extends Component {
   constructor(props) {

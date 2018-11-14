@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
@@ -21,42 +21,40 @@ class HeaderContainer extends Component {
   componentDidMount() {
     console.log('moounted', styles.header);
   }
-  renderClientsMenu() {
 
+  renderClientsMenu() {
     return (
+      <div className={styles.appMenu}>
+        <Button type="primary" className={styles.menuBtn}></Button>
         <Menu
-          className={styles.appMenu}
+          className={styles.appDaysContainer}
           type="primary"
           defaultSelectedKeys={['yesterday']}
           mode="horizontal"
         >
-          <Menu.Item className={styles.appMenuIndent} key="menu-btn-toggle">
-            <Button type="primary" className={styles.menuBtn}></Button>
-          </Menu.Item>
-          <Menu.Item key="today"> today</Menu.Item>
-          <Menu.Item key="yesterday">yesterday</Menu.Item>
-          <Menu.Item key="this_week">this week</Menu.Item>
-          <Menu.Item key="all"> all</Menu.Item>
-
+          <Menu.Item className={styles.appDaysMenu} key="today"> today</Menu.Item>
+          <Menu.Item className={styles.appDaysMenu} key="yesterday">yesterday</Menu.Item>
+          <Menu.Item className={styles.appDaysMenu}  key="this_week">this week</Menu.Item>
+          <Menu.Item className={styles.appDaysMenu}  key="all"> all</Menu.Item>
         </Menu>
+      </div>
       );
-}
-
-headerContent() {
-  return (
-    this.props.userLoginInfo.isUserLogged ? this.renderClientsMenu() : null
-  )
-}
-
-render() {
-  const finalClass = this.props.userLoginInfo.isUserLogged ? `${styles.headerLogged}`:`${styles.headerNotLogged}`;
-  return (
-    <Header className={styles.content}>
-      {this.headerContent()}
-    </Header>
-    );
   }
 
+  headerContent() {
+    return (
+      this.props.userLoginInfo.isUserLogged ? this.renderClientsMenu() : null
+    )
+  }
+
+  render() {
+    const finalClass = this.props.userLoginInfo.isUserLogged ? `${styles.headerLogged}`:`${styles.headerNotLogged}`;
+    return (
+      <Header className={styles.content}>
+        {this.headerContent()}
+      </Header>
+      );
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {

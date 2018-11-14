@@ -15,13 +15,23 @@
 /*---------------------*/
 .appMenu {
   background: #fcfcfc !important;
+  height: 60px !important;
+  position: absolute;
 
 }
-.appMenu > li {
-  margin-left: 33.3px;
+.appDaysContainer {
+  background: #fcfcfc !important;
+  position: relative;
+  left: 60px;
+  top: -45px;
+
+}
+.appDaysMenu {
+  margin-left: 33.3px !important;
   font-size: 18px;
   text-align: center;
-  height: 60px !important;
+  height: 33.3px !important;
+  position: relative;
 }
 .appMenuIndent {
 
@@ -29,7 +39,7 @@
 }
 .menuBtn {
   width: 60px;
-  height: 60px !important;
+  height: 58px !important;
   border: 1px solid transparent;
   border-radius: 0px !important;
 }
