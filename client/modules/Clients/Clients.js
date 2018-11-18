@@ -8,7 +8,9 @@ import styles from './Clients.css';
 class Clients extends Component {
   render() {
     return (
-      <div> CLIENTS PAGE </div>
+      <div>
+        CLIENT!!!
+      </div>
     );
   }
 }

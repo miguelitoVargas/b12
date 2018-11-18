@@ -36,7 +36,7 @@ class Login extends Component {
   }
   render() {
     const userName = this.props.currentUser && this.props.currentUser.userName
-    const signinmsg = (this.props.signinmsg && this.props.signinmsg.credentialsmsg) && this.props.signinmsg.credentialsmsg;
+    const signinmsg = (this.props.signinmsg) ? (this.props.signinmsg.credentialsmsg || this.props.signinmsg.nousrmsg) : '';
     const { getFieldDecorator } = this.props.form;
     return (
       <div className={loginContainer}>
