@@ -11,12 +11,12 @@ class Header extends Component {
 
   constructor(props) {
     super(props);
-    console.log('constructor', this.props);
+    // console.log('constructor', this.props);
     this.headerContent = this.headerContent.bind(this);
   }
 
   componentDidMount() {
-        console.log('moounted', this.props);
+        // console.log('moounted', this.props);
   }
 
   /*{
@@ -41,19 +41,11 @@ class Header extends Component {
 
 }
 
-const mapStateToProps = (state, ownProps) => {
-   console.log('Header_state2props', state, ownProps);
-  //  const {uuid} = state.login;
-   //console.log('header', state);
+const mapStateToProps = (state) => {
   return state;
-
-
-
-
 };
 
-  Header.propTypes = {
-  };
+Header.propTypes = {
+};
 
-  export default connect(mapStateToProps)(Header);
-
+export default connect(mapStateToProps)(Header);

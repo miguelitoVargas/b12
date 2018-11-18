@@ -30,9 +30,9 @@ export default (
     <IndexRoute
       component={Login}
     />
-  <Route
-    path="/:uuid"
-    component={Clients}
-  />
+    <Route
+      path="/home"
+      component={Clients}
+    />
   </Route>
 );

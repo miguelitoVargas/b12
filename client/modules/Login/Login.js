@@ -1,103 +1,116 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-//--- form imports
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Link } from 'react-router';
+// --- form imports
+import { Form, Icon, Input, Button, Modal, Card } from 'antd';
 // Import Style
-import styles, {initValues, loginForm, loginformHeading,
-  loginFormButton, loginFormForgot, loginFormBody, loginContainer} from './Login.css';
-  //--- actions
-import {saveUserLoginInfo} from './LoginActions';
+import { loginForm, loginformHeading, loginFormButton,
+  loginFormBody, loginContainer, logout, start } from './Login.css';
+  // --- actions
+import { validateUser } from '../App/AppActions';
 
 const FormItem = Form.Item;
 
 class Login extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {userIsLogged: false};
-  }
-  //-------- life cycle
-  componentDidUpdate() {
-    const {uuid, isUserLogged} = this.props.userLoginInfo;
-    if(isUserLogged) {
-      const usrAddrs = `/${uuid}`;
-      ///      console.log('USR_ADDRS', usrAddrs);
-      this.props.router.push(`${usrAddrs}`);
-    }
-  }
-
+  state = { signinmsgModal: true }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values, this.props);
-        this.props.saveUserLoginInfo(values);
-        this.setState({userIsLogged: true});
+        this.props.dispatch(validateUser(values));
       }
     });
   }
+  handleOk = () => {
+    this.setState({
+      signinmsgModal: !this.state.signinmsgModal,
+    });
+    window.location.reload()
+  }
 
+  handleCancel = () => {
+    this.setState({
+      signinmsgModal: !this.state.signinmsgModal,
+    });
+  }
   render() {
+    const userName = this.props.currentUser && this.props.currentUser.userName
+    const signinmsg = (this.props.signinmsg && this.props.signinmsg.credentialsmsg) && this.props.signinmsg.credentialsmsg;
     const { getFieldDecorator } = this.props.form;
     return (
       <div className={loginContainer}>
-        <div className={loginForm}>
-          <h3 className={loginformHeading}> SIGN IN TO YOUR ACCOUNT </h3>
-          <Form onSubmit={this.handleSubmit} className={loginFormBody}>
-            <FormItem>
-              {getFieldDecorator('email', {
-              rules: [
-              { type:'email', message: 'This is not a valid email!' },
-              { required: true, message: 'Please input your email' }
-              ],
-              })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="email" />
-              )}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator('password', {
-              rules: [{ required: true, message: 'Please input your Password!' }],
-              })(
-              <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-              )}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator('remember', {
-              valuePropName: 'checked',
-              initialValue: true,
-              })(
-              <Checkbox className={initValues}>Remember me</Checkbox>
-              )}
-              <a className={loginFormForgot} href="">Forgot password</a>
-              <Button type="default" htmlType="submit" className={loginFormButton}>
-                Log in
-              </Button>
-              Or <a href="">register now!</a>
-            </FormItem>
-          </Form>
-        </div>
+        <Modal
+          title="Basic Modal"
+          visible={this.state.signinmsgModal && signinmsg !== ''}
+          onOk={this.handleOk}
+          onCancel={this.onCancel}
+        >
+          <p>{signinmsg}</p>
+        </Modal>
+        {(!this.props.currentUser) ?
+          <div className={loginForm}>
+            <h3 className={loginformHeading}> SIGN IN TO YOUR ACCOUNT </h3>
+            <Form onSubmit={this.handleSubmit} className={loginFormBody}>
+              <FormItem>
+                {getFieldDecorator('email', {
+                  rules: [
+                  { type: 'email', message: 'This is not a valid email!' },
+                  { required: true, message: 'Please input your email' },
+                  ],
+                })(
+                  <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="email" />
+                )}
+              </FormItem>
+              <FormItem>
+                {getFieldDecorator('password', {
+                  rules: [{ required: true, message: 'Please input your Password!' }],
+                })(
+                  <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+                )}
+              </FormItem>
+              <FormItem>
+                <Button type="default" htmlType="submit" className={loginFormButton}>
+                  Log in
+                </Button>
+              </FormItem>
+            </Form>
+          </div> :
+          <div>
+            <Card
+              title="Welcome Back"
+              extra={<Link to="/home" className={start}>START</Link>}
+              style={{ width: 250 }}
+            >
+              <h3>{userName}</h3>
+              <a className={logout} href="api/logout">Logout</a>
+            </Card>
+          </div>
+        }
       </div>
       );
   }
 }
-//------enhancers helpers
-const mapStateToProps = (state, ownProps) => {
+// ------enhancers helpers
+const mapStateToProps = (state) => {
+  // console.log(state)
   return {
-    userLoginInfo: state.userLoginInfo,
+    currentUser: state.app.currentUser,
+    signinmsg: state.app.signinmsg,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({saveUserLoginInfo}, dispatch)
-};
-
 Login.propTypes = {
+  router: PropTypes.object,
+  dispatch: PropTypes.func,
+  getFieldDecorator: PropTypes.func,
+  form: PropTypes.object,
+  signinmsg: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Form.create()(Login));

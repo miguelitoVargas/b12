@@ -2,6 +2,10 @@
 /*@import '../../../node_modules/antd/dist/antd.less';*/
 .ant-checkbox-input {
 }
+
+.logout{
+  color: red;
+}
 .loginContainer {
   position: absolute;
   top: 20%;
@@ -32,4 +36,3 @@
 
 .initValues {
 }
-

@@ -1,12 +1,14 @@
 import Express from 'express';
 import compression from 'compression';
 import mongoose from 'mongoose';
+import session from 'express-session';
 import bodyParser from 'body-parser';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
 
 // Initialize the Express App
 const app = new Express();
+const passport = require('./util/passport/passport');
 
 // Set Development modes checks
 const isDevMode = process.env.NODE_ENV === 'development' || false;
@@ -45,14 +47,16 @@ import Helmet from 'react-helmet';
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
-import posts from './routes/post.routes';
-import dummyData from './dummyData';
+import currentUser from './routes/currentUser.routes';
+import user from './routes/user.routes';
 import serverConfig from './config';
+import UserDB from './dummyUsers';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
 
 // MongoDB Connection
+console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV !== 'test') {
   mongoose.connect(serverConfig.mongoURL, (error) => {
     if (error) {
@@ -61,16 +65,27 @@ if (process.env.NODE_ENV !== 'test') {
     }
 
     // feed some dummy data in DB.
-    dummyData();
+    UserDB();
   });
 }
 
 // Apply body Parser and server public assets and routes
 app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
-app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
+app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
+app.use(
+  session({
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
+    resave: true,
+    saveUninitialized: true,
+    secret: [serverConfig.cookieKey],
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-app.use('/api', posts);
+app.use('/api', currentUser);
+app.use('/api', user);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
@@ -92,7 +107,6 @@ const renderFullPage = (html, initialState) => {
 
         ${isProdMode ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
         <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
-        <link rel="shortcut icon" href="http://res.cloudinary.com/hashnode/image/upload/v1455629445/static_imgs/mern/mern-favicon-circle-fill.png" type="image/png" />
       </head>
       <body>
         <div id="root">${process.env.NODE_ENV === 'production' ? html : `<div>${html}</div>`}</div>
@@ -129,7 +143,7 @@ app.use((req, res, next) => {
     }
 
     if (!renderProps) {
-      return next();
+      return res.status(404);
     }
 
     const store = configureStore();
@@ -157,7 +171,7 @@ app.use((req, res, next) => {
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {
-    console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
+    console.log(`B12 is running on port: ${serverConfig.port}!`); // eslint-disable-line
   }
 });
 

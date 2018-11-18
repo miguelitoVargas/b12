@@ -9,8 +9,7 @@ import HeaderContainer from './components/Header/Header';
 import FooterContent from './components/Footer/Footer';
 import { Layout } from 'antd';
 //  Import Actions
-import { toggleAddPost } from './AppActions';
-import { switchLanguage } from '../../modules/Intl/IntlActions';
+import { toggleAddPost, fetchCurrentUser } from './AppActions';
 
 let DevTools;
 if (process.env.NODE_ENV === 'development') {
@@ -25,9 +24,9 @@ export class App extends Component {
     super(props);
     this.state = { isMounted: false };
   }
-  //----lifecyle
   componentDidMount() {
     this.setState({isMounted: true}); // eslint-disable-line
+    this.props.dispatch(fetchCurrentUser());
   }
   toggleAddPostSection = () => {
     this.props.dispatch(toggleAddPost());
@@ -39,29 +38,28 @@ export class App extends Component {
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
         <div>
           <Helmet
-            title="MERN()()()()RERERE Starter - Blog App"
-            titleTemplate="%s - Blog App"
+            title="B12"
+            titleTemplate="%s - Web App"
             meta={[
             { charset: 'utf-8' },
-            {
-            'http-equiv': 'X-UA-Compatible',
-            content: 'IE=edge',
-            },
-            {
-            name: 'viewport',
-            content: 'width=device-width, initial-scale=1',
-            },
+              {
+                'http-equiv': 'X-UA-Compatible',
+                content: 'IE=edge',
+              },
+              {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1',
+              },
             ]}
           />
           <Layout>
-            <HeaderContainer
-            />
             <Content>
+              <HeaderContainer />
               <div className={styles.container}>
                 {this.props.children}
               </div>
+              <FooterContent />
             </Content>
-            <FooterContent />
           </Layout>
         </div>
       </div>
@@ -75,8 +73,6 @@ App.propTypes = {
   intl: PropTypes.object.isRequired,
 };
 
-//--- enhancers helpers
-// Retrieve data from store as props
 function mapStateToProps(store) {
   return {
     intl: store.intl,

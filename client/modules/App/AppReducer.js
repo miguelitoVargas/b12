@@ -1,18 +1,24 @@
 // Import Actions
-import { TOGGLE_ADD_POST } from './AppActions';
+import { SIGNIN_MSG, FETCH_CURRENT_USER } from './AppActions';
 
 // Initial State
 const initialState = {
-  showAddPost: false,
+  currentUser: null,
+  signinmsg: '',
 };
 
 const AppReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_ADD_POST:
+    case FETCH_CURRENT_USER:
       return {
-        showAddPost: !state.showAddPost,
+        ...state,
+        currentUser: action.payload.userInfo || false,
       };
-
+    case SIGNIN_MSG:
+      return {
+        ...state,
+        signinmsg: (action.payload),
+      };
     default:
       return state;
   }

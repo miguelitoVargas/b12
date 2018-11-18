@@ -1,17 +1,19 @@
-// import helpers
-import router from 'react-router';
-import _ from 'lodash';
+import callApi from '../../util/apiCaller';
+
 // Export Constants
-export const SAVE_USER_LOGIN_INFO = 'SAVE_USER_LOGIN_INFO';
-// Export Actions
-export function saveUserLoginInfo(antform){
-  const  payload = {
-    uuid: _.split(antform.email, '@', 1),
-    isUserLogged: true
+
+export function validateUser(user) {
+  return (dispatch) => {
+    return callApi('login', 'post', {
+      email: user.email,
+      password: user.password,
+    }).then(res => {
+      if (res.nousrmsg || res.credentialsmsg) {
+        dispatch(sendMsgSignin(res));
+      }
+      if (res.userInfo) {
+        dispatch(userAuth(res));
+      }
+    });
   };
-  console.log('inside saveuuid action', payload);
-  return {
-    type: SAVE_USER_LOGIN_INFO,
-    payload: payload
-  }
 }

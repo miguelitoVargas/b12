@@ -1,31 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import {Layout, Menu, Button} from 'antd';
+import { Layout, Menu, Button } from 'antd';
 
-const {Header} = Layout;
+const { Header } = Layout;
 
 // Import Style
 import styles from './Header.css';
 
 class HeaderContainer extends Component {
-
   constructor(props) {
     super(props);
-    console.log('constructor', this.props);
     this.headerContent = this.headerContent.bind(this);
   }
-  //---------life cycle
-  componentDidMount() {
-    console.log('moounted', styles.header);
+  headerContent() {
+    console.log(this.props)
+    return (
+      this.props.app.currentUser ? this.renderClientsMenu() : null
+    )
   }
-
   renderClientsMenu() {
     return (
       <div className={styles.appMenu}>
-        <Button type="primary" className={styles.menuBtn}></Button>
+        <Button type="primary" className={styles.menuBtn} />
         <Menu
           className={styles.appDaysContainer}
           type="primary"
@@ -34,21 +31,16 @@ class HeaderContainer extends Component {
         >
           <Menu.Item className={styles.appDaysMenu} key="today"> today</Menu.Item>
           <Menu.Item className={styles.appDaysMenu} key="yesterday">yesterday</Menu.Item>
-          <Menu.Item className={styles.appDaysMenu}  key="this_week">this week</Menu.Item>
-          <Menu.Item className={styles.appDaysMenu}  key="all"> all</Menu.Item>
+          <Menu.Item className={styles.appDaysMenu} key="this_week">this week</Menu.Item>
+          <Menu.Item className={styles.appDaysMenu} key="all"> all</Menu.Item>
         </Menu>
       </div>
       );
   }
 
-  headerContent() {
-    return (
-      this.props.userLoginInfo.isUserLogged ? this.renderClientsMenu() : null
-    )
-  }
 
   render() {
-    const finalClass = this.props.userLoginInfo.isUserLogged ? `${styles.headerLogged}`:`${styles.headerNotLogged}`;
+    const finalClass = this.props.currentUser ? `${styles.headerLogged}` : `${styles.headerNotLogged}`;
     return (
       <Header className={styles.content}>
         {this.headerContent()}
@@ -57,13 +49,12 @@ class HeaderContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log('Header_state2props', state, ownProps);
+const mapStateToProps = (state) => {
   return state;
 };
 
 Header.propTypes = {
+  userLoginInfo: PropTypes.object,
 };
 
 export default connect(mapStateToProps)(HeaderContainer);
-
