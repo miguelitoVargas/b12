@@ -49,14 +49,15 @@ import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import currentUser from './routes/currentUser.routes';
 import user from './routes/user.routes';
+import customer from './routes/customer.routes';
 import serverConfig from './config';
-import UserDB from './dummyUsers';
+import userDB from './dummyUsers';
+import customerDB from './dummyCustomer';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
 
 // MongoDB Connection
-console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV !== 'test') {
   mongoose.connect(serverConfig.mongoURL, (error) => {
     if (error) {
@@ -65,7 +66,8 @@ if (process.env.NODE_ENV !== 'test') {
     }
 
     // feed some dummy data in DB.
-    UserDB();
+    userDB();
+    customerDB();
   });
 }
 
@@ -86,6 +88,7 @@ app.use(passport.session());
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', currentUser);
 app.use('/api', user);
+app.use('/api', customer);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {

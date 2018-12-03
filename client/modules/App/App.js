@@ -54,7 +54,7 @@ export class App extends Component {
           />
           <Layout>
             <Content>
-              <HeaderContainer />
+              <HeaderContainer router={this.props.router} />
               <div className={styles.container}>
                 {this.props.children}
               </div>

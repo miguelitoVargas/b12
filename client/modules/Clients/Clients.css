@@ -1,1 +1,8 @@
 /* Clients styles */
+.clients-total{
+  display: inline-block;
+  margin-right: 5px;
+}
+small {
+  color: gray;
+}

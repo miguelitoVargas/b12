@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Button, Icon, Modal } from 'antd';
 import { connect } from 'react-redux';
+import AddClientForm from './AddClientForm';
 
 const { Footer } = Layout;
 // Import Style
@@ -30,12 +31,12 @@ class FooterContent extends Component {
     return (
       <Footer className={styles.footer}>
         <Modal
-          title="Basic Modal"
+          title="New Customer"
           visible={this.state.newClientModal}
           onOk={this.handleOk}
-          onCancel={this.onCancel}
+          onCancel={this.handleCancel}
         >
-          <p>Prueba de modal</p>
+          <AddClientForm />
         </Modal>
       {(this.props.currentUser) ?
         <Button type="primary" onClick={this.showNewClientModal}>
@@ -47,7 +48,6 @@ class FooterContent extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     currentUser: state.app.currentUser,
   };

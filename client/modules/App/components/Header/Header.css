@@ -4,7 +4,14 @@
 .headerLogged {
   border-bottom: 1px solid #ccc;
 }
-
+.headerDetail {
+  display: flex;
+  position: absolute;
+  top: 16px;
+  left: 51px;
+  width: 300px;
+  justify-content: space-around;
+}
 .content {
   width: 100%;
   margin: auto;
@@ -17,7 +24,6 @@
   background: #fcfcfc !important;
   height: 60px !important;
   position: absolute;
-
 }
 .appDaysContainer {
   background: #fcfcfc !important;

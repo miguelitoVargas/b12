@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu, Button, Avatar, Icon } from 'antd';
 
 const { Header } = Layout;
 
@@ -14,26 +14,35 @@ class HeaderContainer extends Component {
     this.headerContent = this.headerContent.bind(this);
   }
   headerContent() {
-    console.log(this.props)
     return (
-      this.props.app.currentUser ? this.renderClientsMenu() : null
+      this.props.currentUser ? this.renderClientsMenu() : null
     )
   }
   renderClientsMenu() {
+    const name = this.props.client && `${this.props.client.name} ${this.props.client.lastname}`
     return (
       <div className={styles.appMenu}>
         <Button type="primary" className={styles.menuBtn} />
-        <Menu
-          className={styles.appDaysContainer}
-          type="primary"
-          defaultSelectedKeys={['yesterday']}
-          mode="horizontal"
-        >
-          <Menu.Item className={styles.appDaysMenu} key="today"> today</Menu.Item>
-          <Menu.Item className={styles.appDaysMenu} key="yesterday">yesterday</Menu.Item>
-          <Menu.Item className={styles.appDaysMenu} key="this_week">this week</Menu.Item>
-          <Menu.Item className={styles.appDaysMenu} key="all"> all</Menu.Item>
-        </Menu>
+          {this.props.router.isActive('/home', true)
+            ?
+            <Menu
+              className={styles.appDaysContainer}
+              type="primary"
+              defaultSelectedKeys={['yesterday']}
+              mode="horizontal"
+            >
+              <Menu.Item className={styles.appDaysMenu} key="today"> today</Menu.Item>
+              <Menu.Item className={styles.appDaysMenu} key="yesterday">yesterday</Menu.Item>
+              <Menu.Item className={styles.appDaysMenu} key="this_week">this week</Menu.Item>
+              <Menu.Item className={styles.appDaysMenu} key="all"> all</Menu.Item>
+            </Menu>
+            :
+            <div className={styles.headerDetail}>
+              <Icon type="left" onClick={this.props.router.goBack} />
+              <Avatar icon="user" />
+              <h3>{name}</h3>
+            </div>
+          }
       </div>
       );
   }
@@ -50,7 +59,10 @@ class HeaderContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return state;
+  return {
+    currentUser: state.app.currentUser,
+    client: state.customers.customer,
+  };
 };
 
 Header.propTypes = {

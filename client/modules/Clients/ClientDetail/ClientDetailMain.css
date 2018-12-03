@@ -1,0 +1,11 @@
+@media (min-width: 200px) {
+  .clientdetailmaincontainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (min-width: 568px) {
+  .clientdetailmaincontainer {
+    flex-direction: row;
+  }
+}

@@ -1,0 +1,14 @@
+.authcontainer {
+  position: relative;
+  text-align: center;
+}
+.authcontainer p{
+}
+.bg {
+  width: 100%;
+}
+.logo {
+  width: 102px;
+  position: absolute;
+  right: 0px;
+}

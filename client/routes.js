@@ -5,6 +5,7 @@ import App from './modules/App/App';
 
 import Login from './modules/Login/Login';
 import Clients from './modules/Clients/Clients';
+import ClientsDetail from './modules/Clients/ClientDetail/ClientDetailMain';
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
   require.ensure = function requireModule(deps, callback) {
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
   // Require async routes only in development for react-hot-reloader to work.
   require('./modules/Post/pages/PostListPage/PostListPage');
   require('./modules/Post/pages/PostDetailPage/PostDetailPage');
+  require('./modules/Clients/ClientDetail/ClientDetailMain');
   //  require('./modules/Clients/Clients');
 }
 
@@ -33,6 +35,10 @@ export default (
     <Route
       path="/home"
       component={Clients}
+    />
+    <Route
+      path="/client_detail/:id"
+      component={ClientsDetail}
     />
   </Route>
 );

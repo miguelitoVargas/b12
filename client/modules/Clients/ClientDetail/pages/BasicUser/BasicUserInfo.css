@@ -1,0 +1,56 @@
+.leftInfo {
+  height: 500px;
+  width: 234px;
+  display: inline-block;
+  background: #fff;
+  box-shadow: 5px 5px 0px 0px rgba(0,0,0,.16)
+}
+.topleftinfo {
+  display: flex;
+  justify-content: space-around;
+}
+.invalid{
+  border: 1px solid red;
+}
+.weightinfo,
+.bpinfo,
+.pulseinfo,
+.o2info,
+.drinfo,
+.notesinfo {
+  display: inline-block;
+  height: 60px;
+}
+.weighttitle,
+.bptitle,
+.pulsetitle,
+.o2title,
+.drtitle,
+.notestitle {
+  position: relative;
+  left: -69px;
+  display: inline;
+}
+.drtitle {
+  position: relative;
+  left: -60px;
+}
+.bptitle {
+  position: relative;
+  left: -85px;
+}
+.weightOutline,
+.bpOutline,
+.pulseOutline,
+.o2Outline,
+.drOutline,
+.notesOutline {
+  border-radius: 5px;
+  border: 1px solid rgba(119,119,119,.44);
+  justify-content: space-around;
+  width: 180px;
+  display: inline-flex;
+}
+.dataInfoMargin {
+  text-align: center;
+}
