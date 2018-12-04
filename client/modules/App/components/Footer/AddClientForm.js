@@ -146,7 +146,7 @@ class HorizontalLoginForm extends React.Component {
               required: true, message: 'Please input your E-mail!',
             }],
           })(
-            <Input />
+            <Input placeholder='client@example.com' />
           )}
         </FormItem>
         <FormItem
@@ -157,6 +157,26 @@ class HorizontalLoginForm extends React.Component {
             rules: [{ required: true, message: 'Please input your Ocupation!' }],
           })(
             <Input placeholder="Occupation" />
+          )}
+        </FormItem>
+        <FormItem
+          validateStatus={emergencyNameError ? 'error' : ''}
+          help={emergencyNameError || ''}
+        >
+          {getFieldDecorator('emergencyName', {
+            rules: [{ required: true, message: 'Please input your emergency contact name!' }],
+          })(
+            <Input placeholder="Emergency Contact Name" />
+          )}
+        </FormItem>
+        <FormItem
+          validateStatus={emergencyNumberError ? 'error' : ''}
+          help={emergencyNumberError || ''}
+        >
+          {getFieldDecorator('emergencyNumber', {
+            rules: [{ required: true, message: 'Please input your emergency contact number!' }],
+          })(
+            <Input placeholder="Emergency Contact Number" />
           )}
         </FormItem>
       </Form>

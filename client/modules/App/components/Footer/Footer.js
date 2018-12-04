@@ -35,6 +35,7 @@ class FooterContent extends Component {
           visible={this.state.newClientModal}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          width='60%'
         >
           <AddClientForm />
         </Modal>
